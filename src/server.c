@@ -77,6 +77,7 @@
 #include "view.h"
 #include "workspaces.h"
 #include "xwayland.h"
+#include "zones.h"
 
 #define LAB_EXT_DATA_CONTROL_VERSION 1
 #define LAB_EXT_FOREIGN_TOPLEVEL_LIST_VERSION 1
@@ -291,6 +292,7 @@ allow_for_sandbox(const struct wlr_security_context_v1_state *security_state,
 		"zxdg_importer_v2",
 		"xdg_toplevel_icon_manager_v1",
 		"xdg_wm_dialog_v1",
+		"xx_zone_manager_v1",
 		/* plus */
 		"wp_alpha_modifier_v1",
 		"wp_color_manager_v1",
@@ -827,6 +829,7 @@ server_init(void)
 	server.tablet_manager = wlr_tablet_v2_create(server.wl_display);
 
 	layers_init();
+	zones_init();
 
 	/* These get cleaned up automatically on display destroy */
 	struct wlr_xdg_foreign_registry *registry =
@@ -894,6 +897,7 @@ server_finish(void)
 	output_finish();
 	xdg_shell_finish();
 	layers_finish();
+	zones_finish();
 	kde_server_decoration_finish();
 	xdg_server_decoration_finish();
 	wl_list_remove(&server.new_constraint.link);

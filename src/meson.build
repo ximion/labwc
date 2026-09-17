@@ -33,6 +33,7 @@ labwc_sources = files(
   'workspaces.c',
   'xdg.c',
   'xdg-popup.c',
+  'zones.c',
 )
 
 if have_xwayland

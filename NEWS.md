@@ -90,6 +90,12 @@ The format is based on [Keep a Changelog]
 
 [unreleased-commits]
 
+### Added
+
+- Support the experimental `xx-zones-v1` protocol which allows clients to
+  position their windows within the usable area of an output. Zone handles
+  correspond to output names, so zones can be shared between clients.
+
 ## Notes on wlroots-0.20
 
 There are some regression warnings worth noting for the switch to wlroots 0.20:

@@ -19,6 +19,7 @@
 #include "ssd.h"
 #include "view.h"
 #include "workspaces.h"
+#include "zones.h"
 
 #if HAVE_XWAYLAND
 #include <wlr/xwayland.h>
@@ -37,6 +38,8 @@ desktop_arrange_all_views(void)
 	 * still unmapped. We do want to adjust the geometry of those
 	 * views.
 	 */
+	zones_update();
+
 	struct view *view;
 	wl_list_for_each(view, &server.views, link) {
 		if (!wlr_box_empty(&view->pending)) {

@@ -567,6 +567,7 @@ view_moved(struct view *view)
 	if (rc.resize_indicator && server.grabbed_view == view) {
 		resize_indicator_update(view);
 	}
+	wl_signal_emit_mutable(&view->events.moved, NULL);
 }
 
 void
@@ -1646,6 +1647,9 @@ view_set_ssd_mode(struct view *view, enum lab_ssd_mode mode)
 
 	if (!view_is_floating(view)) {
 		view_apply_special_geometry(view);
+	} else {
+		/* Notify listeners about changed frame extents */
+		wl_signal_emit_mutable(&view->events.moved, NULL);
 	}
 }
 
@@ -2477,6 +2481,7 @@ view_init(struct view *view)
 	wl_signal_init(&view->events.fullscreened);
 	wl_signal_init(&view->events.activated);
 	wl_signal_init(&view->events.always_on_top);
+	wl_signal_init(&view->events.moved);
 	wl_signal_init(&view->events.set_icon);
 	wl_signal_init(&view->events.destroy);
 
@@ -2567,6 +2572,7 @@ view_destroy(struct view *view)
 	assert(wl_list_empty(&view->events.fullscreened.listener_list));
 	assert(wl_list_empty(&view->events.activated.listener_list));
 	assert(wl_list_empty(&view->events.always_on_top.listener_list));
+	assert(wl_list_empty(&view->events.moved.listener_list));
 	assert(wl_list_empty(&view->events.set_icon.listener_list));
 	assert(wl_list_empty(&view->events.destroy.listener_list));
 

@@ -288,6 +288,11 @@ struct view {
 		struct wl_signal activated;     /* bool *activated */
 		struct wl_signal always_on_top;
 		/*
+		 * Emitted after the position/size of the view changed
+		 * and when the frame extents changed without a geometry update.
+		 */
+		struct wl_signal moved;
+		/*
 		 * This is emitted when app_id, or icon set via xdg_toplevel_icon
 		 * is updated. This is listened by scaled_icon_buffer.
 		 */
